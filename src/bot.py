@@ -60,6 +60,9 @@ def get_live_matches():
         return []
 
 def preprocess_match_data_placeholder(match_data):
+    # Esta función sigue siendo un placeholder por ahora.
+    # Solo la llamamos para que el flujo continúe.
+    # La reemplazaremos cuando tengamos la estructura de match_info.
     logger.info(f"Usando preprocess_match_data_placeholder para partido: {match_data.get('fixture',{}).get('id','N/A')}")
     return np.random.rand(1, 10).astype(np.float32)
 
@@ -113,14 +116,18 @@ def predict_command(update: Update, context: CallbackContext) -> None:
     found_any_match_to_process = False
 
     for match_info in live_matches:
-        if not isinstance(match_info, dict):
+        if not isinstance(match_info, dict): 
             logger.warning(f"Elemento en live_matches no es un diccionario: {match_info}")
             continue
         
         found_any_match_to_process = True
         fixture_id = match_info.get('fixture', {}).get('id', 'Desconocido')
         logger.info(f"Procesando partido ID: {fixture_id}")
-
+        
+        # --- ESTA ES LA LÍNEA NUEVA QUE AÑADIMOS ---
+        logger.info(f"DETALLE COMPLETO DEL PARTIDO (match_info): {match_info}") 
+        # --- FIN DE LA LÍNEA NUEVA ---
+        
         input_data = preprocess_match_data_placeholder(match_info) 
 
         try:
@@ -135,7 +142,7 @@ def predict_command(update: Update, context: CallbackContext) -> None:
         if message_part:
             predictions_output.append(message_part)
     
-    if not found_any_match_to_process and live_matches:
+    if not found_any_match_to_process and live_matches: 
         final_message = "Hubo un problema con los datos de los partidos recibidos. Reintentando más tarde."
     elif predictions_output:
         final_message = "🔮 ¡Predicciones Placeholder! 🔮 (Resultados aleatorios del modelo de prueba)\n\n" + "\n\n---\n\n".join(predictions_output)
