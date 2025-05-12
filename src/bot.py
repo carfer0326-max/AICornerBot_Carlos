@@ -31,6 +31,14 @@ try:
         tf.keras.layers.Dropout(0.3),
         tf.keras.layers.Dense(6, activation='sigmoid') 
     ])
+    # model = None # Deja esto
+# try:
+#     model = tf.keras.Sequential([ ... ]) # Comenta estas líneas
+#     model.compile(...)
+#     logger.info("Modelo TensorFlow de placeholder CREADO y compilado.")
+# except Exception as e:
+#     logger.error(f"Error al inicializar el modelo TensorFlow de placeholder: {e}")
+#     model = None # Asegúrate que model siga siendo None
     model.compile(optimizer='adam',
                   loss='binary_crossentropy', 
                   metrics=['accuracy']) 
